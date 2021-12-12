@@ -2,6 +2,7 @@ import cv2
 import matplotlib.pyplot as plt
 import re
 import os
+import time
 from utils import *
 from PIL import Image
 import tkinter as tk
@@ -135,11 +136,13 @@ keepMerging = True
 trayPath = "emptyTrays/RelineCore1LevelB.JPEG"
 trayName = re.search(r"[\/\\](\w+)", trayPath)[1]
 fileName = None
+timestr = time.strftime("%Y%m%d-%H%M%S")
 
 while keepMerging:
+    userInput = None
     if fileName != None:
         trayPath = f"{fileName}.jpg"
-        trayName = re.search(r"_on_(\w+)", trayPath)[1]
+        trayName = re.search(r"(\w+)_", trayPath)[1]
     # Set up some image; work on copy
     # trayPath = "emptyTrays/RelineCore1LevelB.JPEG"
     # trayPath = filedialog.askopenfilenames()[0]
@@ -183,7 +186,7 @@ while keepMerging:
     cv2.setMouseCallback("image", move_line)
     key = "`"
     img_copy = img.copy()
-    fileName = f"{toolName}_on_{trayName}"
+    fileName = f"{trayName}_{timestr}"
     # Loop until the 'c' key is pressed
     while True:
 
@@ -210,7 +213,7 @@ while keepMerging:
 
             path = os.path.join(fileName)
             cv2.imwrite(path + ".jpg", img_copy)
-            with open((path + ".txt"), "w+") as f:
+            with open((path + ".txt"), "a") as f:
                 f.write(
                     f"{toolName} {width} {height} {l + move_increment} {t + move_increment}\n"
                 )
