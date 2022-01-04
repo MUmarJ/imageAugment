@@ -215,11 +215,11 @@ while keepMerging:
             cv2.imwrite(path + ".jpg", img_copy)
             with open((path + ".txt"), "a") as f:
                 f.write(
-                    f"{toolName} {width} {height} {l + move_increment} {t + move_increment}\n"
+                    f"{toolName} {l + move_increment} {t + move_increment} {width} {height}\n"
                 )
             print("Image Saved!")
             break
-    userInput = input(f"Would you like to continue merging with {fileName} (Y)?")
+    userInput = input(f"Would you like to continue merging with {fileName} (y/N)?")
     keepMerging = userInput == "Y" or userInput == "y"
     cv2.destroyAllWindows()
 
