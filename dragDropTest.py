@@ -198,16 +198,24 @@ while keepMerging:
             break
         if key == ord("s"):
             # Image.fromarray(img_copy).save("img_result.jpg")
-            cv2.rectangle(
+            # cv2.rectangle(
+            #     img_copy,
+            #     (l + move_increment, t + move_increment),
+            #     (l + width + move_increment, t + height + move_increment),
+            #     color=(0, 0, 200),
+            #     thickness=2,
+            # )
+            img_copy = img.copy()
+            overlay_image_alpha(
                 img_copy,
-                (l + move_increment, t + move_increment),
-                (l + width + move_increment, t + height + move_increment),
-                color=(0, 0, 200),
-                thickness=2,
+                img_overlay,
+                l + move_increment,
+                t + move_increment,
+                alpha_mask,
             )
             cv2.imshow("image", img_copy)
             print(
-                f"Bounding box drawn!\nl = {l}, t = {t}\nheight = {height}, width = {width}\n\nPress any key"
+                f"Final image \nl = {l}, t = {t}\nheight = {height}, width = {width}\n\nPress any key"
             )
             # cv2.waitKey()
 
