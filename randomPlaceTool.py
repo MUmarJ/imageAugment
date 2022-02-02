@@ -68,7 +68,7 @@ for n in range(generationCount):
 
         # Find tool name from tool file path and save its bounding box data
         toolName = re.search(r"\\(\w+)[^\.]*", col.files[randomIndex])[1]
-        toolWidth, toolHeight = alpha_mask.shape
+        toolHeight, toolWidth = alpha_mask.shape
         with open((path + ".txt"), "a") as f:
             f.write(f"{toolName} {x} {y} {toolWidth} {toolHeight}\n")
 
