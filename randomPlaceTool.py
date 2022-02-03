@@ -7,11 +7,13 @@ import random
 import math
 from utils import *
 from skimage.io import imread_collection
+import shutil
 
 col_dir = "./testTools/*.png"
 
 # Specify number of images to generate
 generationCount = 5
+emptyTrayGeneration = None
 
 # Creating a collection with the available images
 col = imread_collection(col_dir)
@@ -19,19 +21,20 @@ trayPath = "emptyTrays/RelineCore1LevelB_crop.jpeg"
 trayName = re.search(r"[\/\\](\w+)", trayPath)[1]
 tray = cv2.imread(trayPath)
 
-outputFolder = ".\\testOutput\\"
+outputFolder = "./testOutput/"
 fileName = None
 timestr = time.strftime("%Y%m%d-%H%M%S")
+
 # tool = cv2.rotate(tool, cv2.cv2.ROTATE_90_CLOCKWISE)
 
 
 results = []
-for n in range(generationCount):
+for i in range(generationCount):
     trayCopy = tray.copy()
 
     # Each generated image name in sequence will have an index differentiating it
-    fileName = f"{trayName}_{n}_{timestr}"
-    for i in range(random.randint(0, len(col) - 1)):
+    fileName = f"{trayName}_{i}_{timestr}"
+    for _ in range(random.randint(1, len(col) - 1)):
         randomIndex = random.randint(0, len(col) - 1)
         tool = col[randomIndex].copy()
         toolCopy = tool.copy()
@@ -74,6 +77,14 @@ for n in range(generationCount):
 
     results.append(trayCopy)
 
+
+if type(emptyTrayGeneration) == int:
+    for i in range(emptyTrayGeneration):
+        fileName = f"{trayName}_empty_{i}_{timestr}"
+        path = os.path.join(outputFolder + fileName)
+        shutil.copyfile(trayPath, path + ".jpg")
+        with open((path + ".txt"), "a") as f:
+            pass
 # cv2.namedWindow("image", cv2.WINDOW_NORMAL)
 # cv2.imshow("image", trayCopy)
 # cv2.resizeWindow("image", math.ceil(trayWidth / 2), math.floor(trayHeight / 2))
