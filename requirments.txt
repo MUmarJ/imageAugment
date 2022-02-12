@@ -1,0 +1,6 @@
+ipykernel==6.8.0 
+matplotlib==3.5.1
+opencv-python==4.5.4.58
+pandas==1.4.0
+scikit-image==0.19.1
+seaborn==0.11.2
