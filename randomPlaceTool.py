@@ -38,26 +38,42 @@ for i in range(generationCount):
         randomIndex = random.randint(0, len(col) - 1)
         tool = col[randomIndex].copy()
         toolCopy = tool.copy()
-        tool = image_resize(toolCopy, scale=0.75, reference=tool)
+
+        scaleLowerBound = 0.5
+        scaleUpperBound = 0.8
+        randomScale = random.uniform(scaleLowerBound, scaleUpperBound)
+        tool = image_resize(toolCopy, scale=randomScale, reference=tool)
         tool = tool[:, :, :4]
 
         alpha_mask = (tool[:, :, 3].copy()) / 255.0
         img_overlay = tool[:, :, :3].copy()
 
         trayHeight, trayWidth, _ = tray.shape
+        toolHeight, toolWidth = alpha_mask.shape
 
         # Bounds for placing tools within
-        lowerBound = 0.2
-        upperBound = 0.8
+        lowerBound = 0.02
+        # upperBound = 0.8
 
+        # x, y = (
+        #     random.randint(
+        #         math.floor(lowerBound * trayWidth),
+        #         math.ceil(upperBound * trayWidth),
+        #     ),
+        #     random.randint(
+        #         math.floor(lowerBound * trayHeight), math.ceil(upperBound * trayHeight)
+        #     ),
+        # )
+
+        # New Bounds system based on tool width and height
+        toolWidthUpperBound = trayWidth - toolWidth
+        toolHeightUpperBound = trayHeight - toolHeight
         x, y = (
             random.randint(
                 math.floor(lowerBound * trayWidth),
-                math.ceil(upperBound * trayWidth),
+                toolWidthUpperBound,
             ),
-            random.randint(
-                math.floor(lowerBound * trayHeight), math.ceil(upperBound * trayHeight)
-            ),
+            random.randint(math.floor(lowerBound * trayHeight), toolHeightUpperBound),
         )
 
         # Overlay tool on tray on x and y coordinates
@@ -71,7 +87,7 @@ for i in range(generationCount):
 
         # Find tool name from tool file path and save its bounding box data
         toolName = re.search(r"\\(\w+)[^\.]*", col.files[randomIndex])[1]
-        toolHeight, toolWidth = alpha_mask.shape
+
         with open((path + ".txt"), "a") as f:
             f.write(f"{toolName} {x} {y} {toolWidth} {toolHeight}\n")
 
