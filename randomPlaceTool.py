@@ -14,6 +14,7 @@ col_dir = "./testTools/*.png"
 # Specify number of images to generate
 generationCount = 5
 emptyTrayGeneration = None
+removeOutputFolder = True   # Boolean: Delete testOutput? Else add augmented images to testOutput
 
 # Creating a collection with the available images
 col = imread_collection(col_dir)
@@ -24,6 +25,14 @@ tray = cv2.imread(trayPath)
 outputFolder = "./testOutput/"
 fileName = None
 timestr = time.strftime("%Y%m%d-%H%M%S")
+
+
+if removeOutputFolder and os.path.isdir(outputFolder):
+    shutil.rmtree(outputFolder)
+
+if not os.path.isdir(outputFolder):
+    os.makedirs(outputFolder)
+
 
 # tool = cv2.rotate(tool, cv2.cv2.ROTATE_90_CLOCKWISE)
 
