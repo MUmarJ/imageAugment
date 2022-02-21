@@ -39,10 +39,17 @@ for i in range(generationCount):
         tool = col[randomIndex].copy()
         toolCopy = tool.copy()
 
+        # Random scaling
         scaleLowerBound = 0.5
         scaleUpperBound = 0.8
         randomScale = random.uniform(scaleLowerBound, scaleUpperBound)
+        # print(f"Original Tool shape {tool.shape[:2]}")
         tool = image_resize(toolCopy, scale=randomScale, reference=tool)
+        # print(f"New Tool shape {tool.shape[:2]}")
+
+        # Random Rotation
+        tool = randomOrientaton(tool)
+
         tool = tool[:, :, :4]
 
         alpha_mask = (tool[:, :, 3].copy()) / 255.0
@@ -65,7 +72,7 @@ for i in range(generationCount):
         #     ),
         # )
 
-        # New Bounds system based on tool width and height
+        # New Bounds system based on tool width and height (Tool size < Tray size)
         toolWidthUpperBound = trayWidth - toolWidth
         toolHeightUpperBound = trayHeight - toolHeight
         x, y = (
