@@ -1,5 +1,6 @@
 import cv2
 import numpy as np
+import random
 
 
 def image_resize(img, scale=0.8, reference=None):
@@ -15,6 +16,13 @@ def image_resize(img, scale=0.8, reference=None):
     # resize image
     resized = cv2.resize(img, dim, interpolation=cv2.INTER_AREA)
     return resized
+
+
+def randomOrientaton(img):
+    randomOption = random.randint(0, 4)
+    for i in range(randomOption):
+        img = cv2.rotate(img, cv2.cv2.ROTATE_90_CLOCKWISE)
+    return img
 
 
 def overlay_image_alpha(img, img_overlay, x, y, alpha_mask):
