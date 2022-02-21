@@ -9,7 +9,7 @@ from utils import *
 from skimage.io import imread_collection
 import shutil
 
-col_dir = "./testTools/*.png"
+col_dir = "./testTools/RelineCore1LevelB/*.png"
 
 # Specify number of images to generate
 generationCount = 5
