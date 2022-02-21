@@ -60,17 +60,6 @@ for i in range(generationCount):
 
         # Bounds for placing tools within
         lowerBound = 0.02
-        # upperBound = 0.8
-
-        # x, y = (
-        #     random.randint(
-        #         math.floor(lowerBound * trayWidth),
-        #         math.ceil(upperBound * trayWidth),
-        #     ),
-        #     random.randint(
-        #         math.floor(lowerBound * trayHeight), math.ceil(upperBound * trayHeight)
-        #     ),
-        # )
 
         # New Bounds system based on tool width and height (Tool size < Tray size)
         toolWidthUpperBound = trayWidth - toolWidth
@@ -108,25 +97,3 @@ if type(emptyTrayGeneration) == int:
         shutil.copyfile(trayPath, path + ".jpg")
         with open((path + ".txt"), "a") as f:
             pass
-# cv2.namedWindow("image", cv2.WINDOW_NORMAL)
-# cv2.imshow("image", trayCopy)
-# cv2.resizeWindow("image", math.ceil(trayWidth / 2), math.floor(trayHeight / 2))
-# cv2.waitKey(0)
-
-
-# Display resultant images code
-# w = 10
-# h = 10
-# fig = plt.figure(figsize=(5, 1))
-# columns = 5
-# rows = 1
-
-# imgIndex = 0
-# print(len(results))
-# for i in range(1, columns * rows + 1):
-#     print(imgIndex)
-#     img = results[imgIndex]
-#     imgIndex += 1
-#     fig.add_subplot(rows, columns, i)
-#     plt.imshow(img)
-# plt.show()
