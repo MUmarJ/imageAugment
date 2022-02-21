@@ -97,3 +97,5 @@ if type(emptyTrayGeneration) == int:
         shutil.copyfile(trayPath, path + ".jpg")
         with open((path + ".txt"), "a") as f:
             pass
+
+print("Done!")
