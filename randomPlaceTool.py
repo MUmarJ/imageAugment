@@ -82,7 +82,7 @@ for i in range(generationCount):
         cv2.imwrite(path + ".jpg", trayCopy)
 
         # Find tool name from tool file path and save its bounding box data
-        toolName = re.search(r"\\(\w+)[^\.]*", col.files[randomIndex])[1]
+        toolName = re.search(r"[\\/](\w+)\.", col.files[randomIndex])[1]
 
         with open((path + ".txt"), "a") as f:
             f.write(f"{toolName} {x} {y} {toolWidth} {toolHeight}\n")
