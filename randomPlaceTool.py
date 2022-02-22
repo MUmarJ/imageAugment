@@ -17,6 +17,12 @@ emptyTrayGeneration = None
 
 # Creating a collection with the available images
 col = imread_collection(col_dir)
+
+# create mapping between tool paths and tool names
+prog = re.compile(r"[\\/](\w+)\.")
+tool_name_lu = {f: prog.search(f)[1] for f in col.files}
+
+
 trayPath = "emptyTrays/RelineCore1LevelB_crop.jpeg"
 trayName = re.search(r"[\/\\](\w+)", trayPath)[1]
 tray = cv2.imread(trayPath)
@@ -82,7 +88,7 @@ for i in range(generationCount):
         cv2.imwrite(path + ".jpg", trayCopy)
 
         # Find tool name from tool file path and save its bounding box data
-        toolName = re.search(r"[\\/](\w+)\.", col.files[randomIndex])[1]
+        toolName = tool_name_lu[col.files[randomIndex]]
 
         with open((path + ".txt"), "a") as f:
             f.write(f"{toolName} {x} {y} {toolWidth} {toolHeight}\n")
