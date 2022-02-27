@@ -21,7 +21,7 @@ def image_resize(img, scale=0.8, reference=None):
 def randomOrientaton(img):
     randomOption = random.randint(0, 4)
     for i in range(randomOption):
-        img = cv2.rotate(img, cv2.cv2.ROTATE_90_CLOCKWISE)
+        img = cv2.rotate(img, cv2.ROTATE_90_CLOCKWISE)
     return img
 
 
